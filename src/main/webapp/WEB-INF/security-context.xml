@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.dev.usersweb"/>
+
+    <security:authentication-manager id="defaultAuthenticationManager">
+        <security:authentication-provider ref="defaultAuthenticationProvider"/>
+    </security:authentication-manager>
+
+    <security:http use-expressions="true">
+        <security:csrf disabled="true"/>
+        <security:access-denied-handler error-page="/login"/>
+        <security:intercept-url pattern="/login*" access="permitAll()"/>
+        <security:intercept-url pattern="/card/**" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/company/**" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/authorizer/**" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/spring_security_check" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll()"/>
+        <security:intercept-url pattern="/**" requires-channel="any" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/approvalOperations/**" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/logs*" access="hasAnyAuthority('SUPERADMIN', 'ADMIN')"/>
+
+        <security:form-login login-page='/login'
+                             login-processing-url="/spring_security_check"
+                             authentication-failure-url="/login?error=true"
+                             authentication-success-handler-ref="defaultAuthenticationSuccessHandler"
+                             authentication-failure-handler-ref="defaultAuthenticationFailureHandler"
+                             username-parameter="username"
+                             password-parameter="password"
+        />
+        <security:logout delete-cookies="JSESSIONID" logout-url="/logout" logout-success-url="/login?logout=true"/>
+    </security:http>
+
+    <bean id="defaultAuthenticationProvider" class="com.dev.usersweb.security.provider.DefaultAuthenticationProvider"/>
+
+    <bean id="defaultAuthenticationSuccessHandler"
+          class="com.dev.usersweb.security.handler.DefaultAuthenticationSuccessHandler">
+        <property name="forwardUrl" value="/"/>
+    </bean>
+
+    <bean id="defaultAuthenticationFailureHandler"
+          class="com.dev.usersweb.security.handler.DefaultAuthenticationFailureHandler">
+        <property name="noAuthUrl" value="/login?error=true"/>
+    </bean>
+
+    <bean id="defaultRedirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"/>
+<!--
+    <bean id="defaultAuthenticationFilter" class="com.dev.articleplatform.security.filter.DefaultAuthenticationFilter"/>
+
+    <bean id="authEntryPoint" class="com.dev.articleplatform.security.point.AuthEntryPoint"/>-->
+
+</beans>

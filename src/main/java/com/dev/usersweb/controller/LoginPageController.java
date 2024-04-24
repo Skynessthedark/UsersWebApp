@@ -4,17 +4,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomePageController {
+@RequestMapping("/login")
+public class LoginPageController {
 
-    @Value(value = "${page.home.title}")
+    @Value(value = "${page.login.title}")
     private String title;
 
     @GetMapping
-    public String getIndex(Model model) {
+    public String getLoginPage(Model model) {
         model.addAttribute("title", title);
-        model.addAttribute("message", "Welcome");
-        return "home";
+        return "login";
     }
 }
