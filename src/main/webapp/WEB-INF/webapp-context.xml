@@ -20,9 +20,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <context:property-placeholder location="/resources/application.properties"/>
-
     <mvc:annotation-driven />
+
+    <mvc:resources mapping="/resources/**" location="/resources/*" cache-period="31556926"/>
+    <context:property-placeholder location="/resources/application.properties"/>
 
     <import resource="security-context.xml" />
 
@@ -45,9 +46,7 @@
             <props>
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-                <prop key="hibernate.hbm2ddl.import_files">default-data.sql</prop>
-                <prop key="connection.autocommit">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
     </bean>

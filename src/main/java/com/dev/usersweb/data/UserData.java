@@ -1,5 +1,7 @@
 package com.dev.usersweb.data;
 
+import org.springframework.util.StringUtils;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -11,12 +13,12 @@ public class UserData implements Serializable {
 
     private String id;
     private String username;
-    private String password;
     private String name;
     private String surname;
     private String email;
     private String phone;
     private String birthDate;
+    private String password;
     private List<String> roles;
 
     public String getId() {
@@ -33,14 +35,6 @@ public class UserData implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -89,5 +83,16 @@ public class UserData implements Serializable {
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        if(StringUtils.hasText(password)){
+            return password;
+        }
+        return null;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

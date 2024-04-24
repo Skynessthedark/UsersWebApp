@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/login")
-public class LoginPageController {
+public class LoginController {
 
     @Value(value = "${page.login.title}")
     private String title;

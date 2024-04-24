@@ -10,10 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "Users")
@@ -54,7 +51,9 @@ public class UserModel implements UserDetails, Serializable {
     @Column
     @Enumerated
     @ElementCollection(targetClass = UserRole.class)
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
+
+    private boolean removed;
 
     public void setId(Long id) {
         this.id = id;
@@ -133,11 +132,11 @@ public class UserModel implements UserDetails, Serializable {
         this.birthDate = birthDate;
     }
 
-    public List<UserRole> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
@@ -161,5 +160,11 @@ public class UserModel implements UserDetails, Serializable {
         return false;
     }
 
+    public boolean isRemoved() {
+        return removed;
+    }
 
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
 }

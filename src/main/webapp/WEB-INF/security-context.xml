@@ -20,14 +20,8 @@
         <security:csrf disabled="true"/>
         <security:access-denied-handler error-page="/login"/>
         <security:intercept-url pattern="/login*" access="permitAll()"/>
-        <security:intercept-url pattern="/card/**" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/company/**" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/authorizer/**" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/spring_security_check" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/resources/**" access="permitAll()"/>
-        <security:intercept-url pattern="/**" requires-channel="any" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/approvalOperations/**" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/logs*" access="hasAnyAuthority('SUPERADMIN', 'ADMIN')"/>
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
+        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
 
         <security:form-login login-page='/login'
                              login-processing-url="/spring_security_check"
@@ -44,7 +38,7 @@
 
     <bean id="defaultAuthenticationSuccessHandler"
           class="com.dev.usersweb.security.handler.DefaultAuthenticationSuccessHandler">
-        <property name="forwardUrl" value="/"/>
+        <property name="forwardUrl" value="/user"/>
     </bean>
 
     <bean id="defaultAuthenticationFailureHandler"
@@ -53,9 +47,5 @@
     </bean>
 
     <bean id="defaultRedirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"/>
-<!--
-    <bean id="defaultAuthenticationFilter" class="com.dev.articleplatform.security.filter.DefaultAuthenticationFilter"/>
-
-    <bean id="authEntryPoint" class="com.dev.articleplatform.security.point.AuthEntryPoint"/>-->
 
 </beans>
