@@ -7,6 +7,8 @@ import com.dev.usersweb.mapper.UserMapper;
 import com.dev.usersweb.model.UserModel;
 import com.dev.usersweb.service.UserService;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Component
 public class UserFacadeImpl implements UserFacade {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
 
     @Value("${message.error}")
     private String errorMsg;
@@ -37,6 +41,7 @@ public class UserFacadeImpl implements UserFacade {
             UserModel userModel = (UserModel) userService.findByUsername(username);
             return userMapper.mapModel2Data(userModel);
         }catch (Exception ex){
+            LOGGER.error("getUserByUsernameExp: ", ex);
             return null;
         }
     }
@@ -52,7 +57,8 @@ public class UserFacadeImpl implements UserFacade {
         try {
             UserModel userModel = userService.findById(Long.parseLong(id));
             return userMapper.mapModel2Data(userModel);
-        }catch (Exception ignored){
+        }catch (Exception e){
+            LOGGER.error("getUserByIdExp: ", e);
             return null;
         }
     }
@@ -73,6 +79,7 @@ public class UserFacadeImpl implements UserFacade {
     public boolean saveUser(UserData userData) {
         UserModel userModel = getUserModel(userData);
         if(userModel == null){
+            LOGGER.error("saveUserExp: User cannot be null.");
             return false;
         }
         return userService.save(userModel);
@@ -90,7 +97,9 @@ public class UserFacadeImpl implements UserFacade {
                     }
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ex) {
+            LOGGER.error("removeUserExp: ", ex);
+        }
         return getResult(false, errorMsg);
     }
 

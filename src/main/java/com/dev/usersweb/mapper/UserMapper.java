@@ -2,8 +2,11 @@ package com.dev.usersweb.mapper;
 
 import com.dev.usersweb.data.UserData;
 import com.dev.usersweb.enums.UserRole;
+import com.dev.usersweb.facade.impl.UserFacadeImpl;
 import com.dev.usersweb.model.UserModel;
 import org.mapstruct.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
@@ -13,6 +16,8 @@ import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(UserMapper.class);
 
     @Mapping(target = "id", expression = "java(userModel.getId().toString())")
     @Mapping(target = "birthDate", dateFormat = "dd-MM-yyyy")
@@ -50,7 +55,9 @@ public interface UserMapper {
         for (String role : roles) {
             try {
                 userRoles.add(UserRole.valueOf(role));
-            }catch (Exception ignored){}
+            }catch (Exception ex){
+                LOGGER.error("mapStringToEnumExp: ", ex);
+            }
         }
         return userRoles;
     }

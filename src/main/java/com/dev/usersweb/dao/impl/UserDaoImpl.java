@@ -1,11 +1,14 @@
 package com.dev.usersweb.dao.impl;
 
+import com.dev.usersweb.controller.UserController;
 import com.dev.usersweb.dao.UserDao;
 import com.dev.usersweb.model.UserModel;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +18,8 @@ import java.util.List;
 @Transactional
 @Repository
 public class UserDaoImpl implements UserDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
 
     private static final String FROM = " FROM UserModel";
     private static final String FIND_BY_USERNAME = " username=:username";
@@ -35,6 +40,7 @@ public class UserDaoImpl implements UserDao {
                     .setParameter("removed", false)
                     .getResultList().get(0);
         } catch (Exception e) {
+            LOGGER.error("findByUsernameExp: ", e);
             return null;
         }
     }
@@ -47,6 +53,7 @@ public class UserDaoImpl implements UserDao {
                     .setParameter("removed", false)
                     .getResultList();
         } catch (Exception e) {
+            LOGGER.error("getUsersExp: ", e);
             return Collections.emptyList();
         }
     }
@@ -59,6 +66,7 @@ public class UserDaoImpl implements UserDao {
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
+            LOGGER.error("findByIdExp: ", e);
             return null;
         }
     }
@@ -74,6 +82,7 @@ public class UserDaoImpl implements UserDao {
             }
             return true;
         } catch (Exception e) {
+            LOGGER.error("saveExp: ", e);
             return false;
         }
     }
