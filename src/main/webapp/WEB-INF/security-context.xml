@@ -16,7 +16,7 @@
         <security:authentication-provider ref="defaultAuthenticationProvider"/>
     </security:authentication-manager>
 
-    <security:http use-expressions="true">
+    <security:http use-expressions="true" pattern="/**">
         <security:csrf disabled="true"/>
         <security:access-denied-handler error-page="/login"/>
         <security:intercept-url pattern="/login*" access="permitAll()"/>
@@ -47,5 +47,7 @@
     </bean>
 
     <bean id="defaultRedirectStrategy" class="org.springframework.security.web.DefaultRedirectStrategy"/>
+
+    <bean id="jspExpresionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
 </beans>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <spring:htmlEscape defaultHtmlEscape="true" />
 
 <%@page isELIgnored="false" %>
@@ -53,10 +53,9 @@
                     <th>E-posta</th>
                     <th>Telefon</th>
                     <th>Doğum Tarihi</th>
-                    <%--<sec:authorize access="hasRole('ADMIN')">
-                        //TODO: Find compatible sec resource with jakarta
-                    </sec:authorize>--%>
-                    <th></th>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <th></th>
+                    </sec:authorize>
                 </tr>
                 <c:forEach items="${users}" var="user" varStatus="index">
                     <tr>
@@ -67,12 +66,11 @@
                         <td>${user.email}</td>
                         <td>${user.phone}</td>
                         <td>${user.birthDate}</td>
-                        <%--<sec:authorize access="hasRole('ADMIN')">
-
-                        </sec:authorize>--%>
-                        <th><a class="btn btn-primary" href="${saveUrl}?id=${user.id}">Güncelle</a>
-                            <span>&nbsp;</span>
-                            <a class="btn btn-secondary" href="${removeUrl}?id=${user.id}">Sil</a></th>
+                        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+                            <th><a class="btn btn-primary" href="${saveUrl}?id=${user.id}">Güncelle</a>
+                                <span>&nbsp;</span>
+                                <a class="btn btn-secondary" href="${removeUrl}?id=${user.id}">Sil</a></th>
+                        </sec:authorize>
                     </tr>
                 </c:forEach>
             </table>
