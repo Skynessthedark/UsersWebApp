@@ -93,7 +93,7 @@ public class UserFacadeImpl implements UserFacade {
                 if (userModel != null) {
                     userModel.setRemoved(true);
                     if (userService.save(userModel)) {
-                        return getResult(false, successMsg);
+                        return getResult(true, successMsg);
                     }
                 }
             }

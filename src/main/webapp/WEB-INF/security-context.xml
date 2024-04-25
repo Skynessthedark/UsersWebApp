@@ -21,7 +21,6 @@
         <security:access-denied-handler error-page="/login"/>
         <security:intercept-url pattern="/login*" access="permitAll()"/>
         <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
-        <security:intercept-url pattern="/**" access="isFullyAuthenticated()"/>
 
         <security:form-login login-page='/login'
                              login-processing-url="/spring_security_check"

@@ -1,0 +1,42 @@
+table, th, td {
+    border-bottom: 1px solid #1b93c0;
+}
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th{
+    color: #1b93c0;
+}
+
+div#id{
+    text-align: center;
+    background-color: orangered;
+}
+
+.main-section{
+    text-align: center;
+    align-items: center;
+    display: inline-block;
+}
+
+.main-header{
+    text-align: end;
+    /*margin-right: 3em;*/
+}
+
+#header{
+    color: aliceblue;
+    background-color: #1b93c0;
+}
+
+.btn-primary{
+    background-color: #1b93c0;
+}
+
+.main-header > .btn-primary{
+    background-color: #46c383;
+    border-color: aliceblue;
+}
+

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <spring:htmlEscape defaultHtmlEscape="true" />
 
 <%@page isELIgnored="false" %>
@@ -12,24 +13,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <tags:css />
 </head>
 <body>
 <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-    <div id="error" style="text-align: center; background-color: orangered">
-        Lütfen tekrar giriş yapmayı deneyin...
-    </div>
+    <tags:error message="Lütfen tekrar giriş yapmayı deneyin..." />
 </c:if>
-<section class="d-flex flex-column" style="text-align: center;align-items: center; display: inline-block">
-    <div class="p-2" id="header">
+<c:url var="loginUrl" value='/spring_security_check'/>
+<section class="d-flex flex-column main-section">
+    <div class="p-2 col-10" id="header">
         <h1>Hoşgeldiniz!</h1>
     </div>
     <div class="p-2">
         <p>Lütfen Giriş Yapın.</p>
     </div>
     <div class="p-2">
-        <c:url var="loginUrl" value='/spring_security_check'/>
         <form:form action="${loginUrl}" method="POST" modelAttribute="loginForm">
             <div class="form-floating mt-3">
                 <input type="text" class="form-control" id="username" placeholder="Kullanıcı Adı:" name="username">
@@ -48,3 +46,4 @@
     </div>
 </section>
 </body>
+<tags:js />

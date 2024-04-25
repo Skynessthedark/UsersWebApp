@@ -33,6 +33,12 @@ public class UserController {
         return "users";
     }
 
+    @GetMapping("user-table")
+    public String getUsersTable(Model model) {
+        model.addAttribute("users", userFacade.getUsers());
+        return "userTable";
+    }
+
     @GetMapping(value = "/save")
     public String getSaveUserPage(@RequestParam(required = false) String id,  Model model) {
         addCommonAttributes(model);
@@ -53,8 +59,8 @@ public class UserController {
         return REDIRECT_PREFIX + "/save";
     }
 
-    @PostMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResultData removeUser(@RequestParam String id) {
+    @PostMapping(value = "/remove/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResultData removeUser(@PathVariable String id) {
         return userFacade.removeUser(id);
     }
 
