@@ -18,7 +18,7 @@ div#id{
 .main-section{
     text-align: center;
     align-items: center;
-    display: inline-block;
+    width: 100%;
 }
 
 .main-header{
@@ -31,12 +31,104 @@ div#id{
     background-color: #1b93c0;
 }
 
+.header-section{
+    align-items: center;
+}
+.header-section > div{
+    text-align: end;
+}
 .btn-primary{
     background-color: #1b93c0;
 }
 
+#logout-btn{
+    color: #1b93c0;
+    background-color: #8b85857d;
+}
+
 .main-header > .btn-primary{
     background-color: #46c383;
+}
+
+.btn{
     border-color: aliceblue;
+}
+
+.header-section > div{
+    text-align: end;
+}
+
+.form-div{
+    padding: 1em;
+    float: left;
+    border-bottom: 1px aliceblue solid;
+    width: 83.33333333%;
+}
+
+.form-submit-div{
+    padding: 1em;
+    border-bottom: 1px aliceblue solid;
+    width: 100%;
+    justify-content: center;
+}
+
+.submit-btn{
+    float: right;
+    width: 40%;
+}
+
+.cancel-btn{
+    float: right;
+    width: 40%;
+}
+
+.cancel-btn > *, .submit-btn >*{
+    width: 100%;
+}
+.form-label{
+    margin: auto;
+    padding-right: 3em;
+    width: 45%;
+    text-align: end;
+}
+
+.form-check-label{
+    padding-right: 3em;
+    width: 45%;
+    text-align: end;
+}
+
+.form-check-input{
+    height: 1.5em;
+}
+
+.form-control, .form-date{
+    width: 55%;
+}
+
+.form-date{
+   padding: 0;
+}
+
+.main-section > *{
+    display: inline-block;
+    width: 83.33333333%;
+}
+
+#user-table{
+    width: auto;
+}
+
+#loginForm{
+    display: grid;
+    justify-items: center;
+}
+.mt-3{
+    width: 66.6%;
+    margin-left: 24em;
+}
+.d-grid.mt-3{
+    width: 33.3%;
+    margin-left: 2em;
 }
 

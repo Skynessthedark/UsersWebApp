@@ -2,6 +2,10 @@ let BASE_URL = location.protocol + "//" + location.host;
 let REMOVE_URL = "/user/remove/";
 let USER_TABLE_URL = "/user/user-table";
 
+$(document).ready(function (){
+    $('#birthDate').datepicker({format: 'dd-mm-yyyy'});
+});
+
 function removeUser(userId) {
     $.ajax({
         method: "POST",

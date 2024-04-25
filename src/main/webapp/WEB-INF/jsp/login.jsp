@@ -21,7 +21,7 @@
 </c:if>
 <c:url var="loginUrl" value='/spring_security_check'/>
 <section class="d-flex flex-column main-section">
-    <div class="p-2 col-10" id="header">
+    <div class="p-2" id="header">
         <h1>Hoşgeldiniz!</h1>
     </div>
     <div class="p-2">

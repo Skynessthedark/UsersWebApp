@@ -2,6 +2,7 @@ package com.dev.usersweb.facade.impl;
 
 import com.dev.usersweb.data.ResultData;
 import com.dev.usersweb.data.UserData;
+import com.dev.usersweb.enums.UserRole;
 import com.dev.usersweb.facade.UserFacade;
 import com.dev.usersweb.mapper.UserMapper;
 import com.dev.usersweb.model.UserModel;
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class UserFacadeImpl implements UserFacade {
@@ -81,6 +80,11 @@ public class UserFacadeImpl implements UserFacade {
         if(userModel == null){
             LOGGER.error("saveUserExp: User cannot be null.");
             return false;
+        }
+        if(Boolean.TRUE.equals(userData.isAdmin())){
+            userModel.getRoles().add(UserRole.ADMIN);
+        }else{
+            userModel.getRoles().remove(UserRole.ADMIN);
         }
         return userService.save(userModel);
     }

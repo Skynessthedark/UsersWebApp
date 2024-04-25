@@ -19,6 +19,7 @@ public class UserData implements Serializable {
     private String phone;
     private String birthDate;
     private String password;
+    private boolean admin;
     private List<String> roles;
 
     public String getId() {
@@ -94,5 +95,13 @@ public class UserData implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

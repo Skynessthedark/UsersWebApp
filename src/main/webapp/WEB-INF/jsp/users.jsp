@@ -16,6 +16,7 @@
     <tags:css />
 </head>
 <body>
+<tags:header/>
 <c:set value="user/save" var="saveUrl" />
 <section class="d-flex flex-column col-12 main-section">
     <div class="p-2 col-10" id="header">

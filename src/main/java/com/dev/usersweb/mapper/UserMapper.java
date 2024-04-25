@@ -17,22 +17,21 @@ import java.util.Set;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(UserMapper.class);
-
     @Mapping(target = "id", expression = "java(userModel.getId().toString())")
-    @Mapping(target = "birthDate", dateFormat = "dd-MM-yyyy")
+    @Mapping(target = "birthDate", dateFormat = "dd-mm-yyyy")
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapEnumToString")
     @Mapping(target = "password", source = "password", ignore = true)
+    //@Mapping(target = "admin", qualifiedByName = "checkAdmin")
     public abstract UserData mapModel2Data(UserModel userModel);
 
     @Mapping(target = "id", source = "id", ignore = true)
-    @Mapping(target = "birthDate", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "roles", source = "roles", qualifiedByName = "mapStringToEnum")
+    @Mapping(target = "birthDate", dateFormat = "dd-mm-yyyy")
+    @Mapping(target = "roles", source = "roles", ignore = true)
     public abstract UserModel mapData2Model(UserData userData);
 
+    @Mapping(target = "roles", source = "roles", ignore = true)
     @Mapping(target = "id", expression = "java(Long.parseLong(userData.getId()))")
-    @Mapping(target = "birthDate", dateFormat = "yyyy-MM-dd")
-    @Mapping(target = "roles", source = "roles", qualifiedByName = "mapStringToEnum")
+    @Mapping(target = "birthDate", dateFormat = "dd-mm-yyyy")
     @Mapping(target = "password", source = "password",
             nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(@MappingTarget UserModel userModel, UserData userData);
@@ -46,19 +45,8 @@ public interface UserMapper {
         return roles.stream().map(UserRole::name).toList();
     }
 
-    @Named("mapStringToEnum")
-    default Set<UserRole> mapStringToEnum(List<String> roles) {
-        if (CollectionUtils.isEmpty(roles)) {
-            return new HashSet<>();
-        }
-        Set<UserRole> userRoles = new HashSet<>();
-        for (String role : roles) {
-            try {
-                userRoles.add(UserRole.valueOf(role));
-            }catch (Exception ex){
-                LOGGER.error("mapStringToEnumExp: ", ex);
-            }
-        }
-        return userRoles;
+    @Named("checkAdmin")
+    default boolean checkAdmin(UserModel userModel) {
+        return userModel.getRoles().contains(UserRole.ADMIN);
     }
 }

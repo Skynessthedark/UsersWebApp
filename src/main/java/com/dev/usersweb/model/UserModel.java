@@ -51,7 +51,7 @@ public class UserModel implements UserDetails, Serializable {
     @Column
     @Enumerated
     @ElementCollection(targetClass = UserRole.class)
-    private Set<UserRole> roles;
+    private Set<UserRole> roles = new HashSet<>();
 
     private boolean removed;
 
@@ -166,5 +166,12 @@ public class UserModel implements UserDetails, Serializable {
 
     public void setRemoved(boolean removed) {
         this.removed = removed;
+    }
+
+    @PrePersist
+    public void persistUser() {
+        if (roles.isEmpty()) {
+            roles.add(UserRole.USER);
+        }
     }
 }
