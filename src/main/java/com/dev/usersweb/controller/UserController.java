@@ -5,11 +5,14 @@ import com.dev.usersweb.data.UserData;
 import com.dev.usersweb.facade.UserFacade;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @Scope("session")
 public class UserController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private static final String REDIRECT_PREFIX = "redirect:/user";
+    private static final String REDIRECT_SAVE = "/save";
 
     @Value(value = "${page.user.title}")
     private String title;
@@ -50,13 +55,18 @@ public class UserController {
     public String saveUser(@Valid @ModelAttribute UserData userData, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("error", true);
-            return REDIRECT_PREFIX;
+            return getRedirectUrl(true, userData.getId());
         }
         if(userFacade.saveUser(userData)){
-            return REDIRECT_PREFIX;
+            return getRedirectUrl(false, userData.getId());
         }
         model.addAttribute("error", true);
-        return REDIRECT_PREFIX + "/save";
+        return getRedirectUrl(true, userData.getId());
+    }
+
+    @PostMapping(value = "/check-user-exists")
+    public @ResponseBody ResultData checkUserExists(@RequestParam String username) {
+        return userFacade.checkIfUserExists(username);
     }
 
     @PostMapping(value = "/remove/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,5 +76,16 @@ public class UserController {
 
     private void addCommonAttributes(Model model){
         model.addAttribute("title", title);
+    }
+
+    private String getRedirectUrl(boolean hasError, String userId){
+        StringBuilder sb = new StringBuilder(REDIRECT_PREFIX);
+        if(hasError){
+            sb.append(REDIRECT_SAVE);
+            if(StringUtils.hasText(userId)){
+                sb.append("?id=").append(userId);
+            }
+        }
+        return sb.toString();
     }
 }

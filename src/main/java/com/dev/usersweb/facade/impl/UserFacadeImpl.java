@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 public class UserFacadeImpl implements UserFacade {
@@ -87,6 +89,12 @@ public class UserFacadeImpl implements UserFacade {
             userModel.getRoles().remove(UserRole.ADMIN);
         }
         return userService.save(userModel);
+    }
+
+    @Override
+    public ResultData checkIfUserExists(String username) {
+        UserModel userModel = (UserModel) userService.findByUsername(username);
+        return getResult(userModel != null, successMsg);
     }
 
     @Override

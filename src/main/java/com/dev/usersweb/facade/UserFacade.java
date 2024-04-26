@@ -16,5 +16,7 @@ public interface UserFacade {
 
     boolean saveUser(UserData userData);
 
+    ResultData checkIfUserExists(String username);
+
     ResultData removeUser(String id);
 }

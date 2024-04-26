@@ -30,7 +30,7 @@ public class UserModel implements UserDetails, Serializable {
     private String username;
 
     @Column(length = 15)
-    @Size(min = 4, max = 15)
+    @Size(min = 5, max = 15)
     private String password;
 
     @Column(nullable = false)

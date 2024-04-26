@@ -129,6 +129,13 @@ div#id{
 }
 .d-grid.mt-3{
     width: 33.3%;
-    margin-left: 2em;
+    margin-left: 25em;
 }
 
+.error{
+    color: orangered;
+}
+
+#error{
+    background-color: orangered;
+}

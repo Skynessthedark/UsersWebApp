@@ -28,7 +28,7 @@
         <p>Lütfen Giriş Yapın.</p>
     </div>
     <div class="p-2">
-        <form:form action="${loginUrl}" method="POST" modelAttribute="loginForm">
+        <form:form action="${loginUrl}" method="POST" modelAttribute="loginForm" id="login-form">
             <div class="form-floating mt-3">
                 <input type="text" class="form-control" id="username" placeholder="Kullanıcı Adı:" name="username">
                 <label for="username">Kullanıcı Adı:</label>

@@ -1,6 +1,7 @@
 package com.dev.usersweb.data;
 
-import org.springframework.util.StringUtils;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,13 +13,29 @@ public class UserData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String surname;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
     private String phone;
+
+    @NotBlank
     private String birthDate;
+
+    @NotBlank
     private String password;
+
     private boolean admin;
     private List<String> roles;
 
@@ -87,10 +104,7 @@ public class UserData implements Serializable {
     }
 
     public String getPassword() {
-        if(StringUtils.hasText(password)){
-            return password;
-        }
-        return null;
+        return password;
     }
 
     public void setPassword(String password) {

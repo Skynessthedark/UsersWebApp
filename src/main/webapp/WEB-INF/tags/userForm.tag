@@ -9,7 +9,7 @@
 
 <c:set var="actionUrl" value="/user/save" />
 <c:set var="isAdmin" value="${fn:containsIgnoreCase(userForm.roles, 'ADMIN')}" />
-<form:form method="POST" name="userForm" action="${actionUrl}" >
+<form:form method="POST" name="userForm" action="${actionUrl}" id="user-form" >
     <input hidden id="userId" name="id" value="${userForm.id}" />
     <div class="row form-div">
         <label class="form-label" for="name">Adı</label>
@@ -50,7 +50,8 @@
     <sec:authorize access="hasAuthority('ROLE_ADMIN')">
         <div class="row form-div">
             <label class="form-check-label" for="admin">Admin Yetkisi Var mı?</label>
-            <input class="form-check-input" type="checkbox" id="admin" name="admin" <c:if test="${isAdmin eq true}">checked</c:if> >
+            <input class="form-check-input" type="checkbox" id="admin"
+                   name="admin" <c:if test="${isAdmin eq true}">checked</c:if> >
         </div>
     </sec:authorize>
     <div class="row form-submit-div">

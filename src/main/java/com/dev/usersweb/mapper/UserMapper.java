@@ -14,14 +14,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface UserMapper {
 
     @Mapping(target = "id", expression = "java(userModel.getId().toString())")
     @Mapping(target = "birthDate", dateFormat = "dd-mm-yyyy")
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapEnumToString")
-    @Mapping(target = "password", source = "password", ignore = true)
-    //@Mapping(target = "admin", qualifiedByName = "checkAdmin")
     public abstract UserData mapModel2Data(UserModel userModel);
 
     @Mapping(target = "id", source = "id", ignore = true)
@@ -32,8 +30,6 @@ public interface UserMapper {
     @Mapping(target = "roles", source = "roles", ignore = true)
     @Mapping(target = "id", expression = "java(Long.parseLong(userData.getId()))")
     @Mapping(target = "birthDate", dateFormat = "dd-mm-yyyy")
-    @Mapping(target = "password", source = "password",
-            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(@MappingTarget UserModel userModel, UserData userData);
 
 
@@ -43,10 +39,5 @@ public interface UserMapper {
             return Collections.emptyList();
         }
         return roles.stream().map(UserRole::name).toList();
-    }
-
-    @Named("checkAdmin")
-    default boolean checkAdmin(UserModel userModel) {
-        return userModel.getRoles().contains(UserRole.ADMIN);
     }
 }
