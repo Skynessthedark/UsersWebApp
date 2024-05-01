@@ -46,4 +46,5 @@
     </div>
 </section>
 </body>
+<tags:modal/>
 <tags:js />

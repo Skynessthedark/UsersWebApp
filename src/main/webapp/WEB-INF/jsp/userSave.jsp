@@ -17,6 +17,9 @@
 </head>
 <body>
 <tags:header/>
+<c:if test="${error eq true}">
+    <tags:error message="Bir hata oluştu. Lütfen tekrar deneyin..." />
+</c:if>
 <section class="d-flex flex-column col-12 main-section">
     <div class="p-2 col-10" id="header">
         <h1>Kullanıcı Kayıt</h1>
@@ -26,4 +29,5 @@
     </div>
 </section>
 </body>
+<tags:modal/>
 <tags:js />

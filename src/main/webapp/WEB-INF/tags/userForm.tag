@@ -21,7 +21,9 @@
     </div>
     <div class="row form-div">
         <label class="form-label" for="username">Kullanıcı Adı</label>
-        <input class="form-control" type="text" id="username" name="username" value="${userForm.username}">
+        <input class="form-control <c:if test='${not empty userForm.username}'>disabled</c:if>"
+        type="text" id="username" name="username" value="${userForm.username}"
+            <c:if test="${not empty userForm.username}">readonly="readonly"</c:if>>
     </div>
     <div class="row form-div">
         <label class="form-label" for="password">Şifre</label>

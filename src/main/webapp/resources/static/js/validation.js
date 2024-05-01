@@ -20,6 +20,9 @@ $(document).ready(function (){
                 required: true,
                 minlength: 5
             }
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter($(element).parent());
         }
     });
 
@@ -65,6 +68,13 @@ $(document).ready(function (){
             phone: "Telefon Numaranızı Giriniz.",
             email: "E-Posta Adresinizi Giriniz.",
             birthDate: "Doğum Tarihinizi Giriniz."
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr("name") === "birthDate") {
+                error.insertAfter($(element).parent());
+            } else {
+                error.insertAfter(element);
+            }
         },
         submitHandler: function(form) {
             form.submit();

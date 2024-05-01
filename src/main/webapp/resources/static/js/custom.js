@@ -9,6 +9,14 @@ $(document).ready(function (){
     $('#myform').submit(function() {
         checkUser();
     });
+
+    $("#modal-btn").click(function(){
+        $("#modal").modal('show');
+    });
+
+    $(".close").click(function(){
+        $("#modal").modal('hide');
+    });
 });
 
 function removeUser(userId) {
@@ -19,7 +27,7 @@ function removeUser(userId) {
         cache: false,
         async: false,
         success: function (response) {
-            alert(response.message);
+            openModal(null, response.message);
             getUserTable();
         },
         error: function (result) {
@@ -52,7 +60,7 @@ function checkUsername(username) {
         async: false,
         success: function (response) {
             if(response.status === true){
-                alert("Girilen Kullanıcı Adı ile bir kullanıcı bulunmaktadır.");
+                openModal(null, "Girilen Kullanıcı Adı ile bir kullanıcı bulunmaktadır.");
                 userExists = true;
             }
         },
@@ -61,4 +69,12 @@ function checkUsername(username) {
         }
     });
     return userExists;
+}
+
+function openModal(title, message) {
+    if (title !== null) {
+        $("#modal-title").html(title);
+    }
+    $(".modal-body").html(message);
+    $("#modal-btn").trigger('click');
 }
